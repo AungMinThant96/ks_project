@@ -1,0 +1,9 @@
+{% extends '_base.html' %}
+{% block title %}Delete Page{% endblock title %}
+{% block content %}
+    <p>Are you sure to delete {{book}}?</p>
+    <form action="" method='post'>
+        {% csrf_token %}
+        <input class="btn btn-danger" type="submit" value="Delete">
+    </form>
+{% endblock content %}

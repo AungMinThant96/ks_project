@@ -1,0 +1,30 @@
+{% extends '_base.html' %}
+{% block title %}Comments{% endblock title %}
+{% block content %}
+{% if comments %}
+ {% for comment in comments %}
+ <div class="card">
+   <div class="card-body">
+      {% if user == comment.user %}
+      <a class="btn btn-dark" style="float:right" href={% url "books:comment_delete" comment.pk comment.book.slug %}><i class='fa fa-remove' style='color:#f33535'></i></a>
+      {% endif %}
+      {% if comment.user.profile.avatar %}
+         <div class="avatar avatar--small active">
+         <img src="{{comment.user.profile.avatar.url}}" />
+   </div>
+      {% else %}
+         <i class='fa fa-user-circle' style="font-size:40px;"></i>
+      {% endif %}
+      <h5 class="card-title" style="display:inline">{{comment.user.profile.username}} </h5>
+      <i><small>{{comment.comment_create}}</small></i>
+         
+         <p>&emsp;&emsp;&emsp;{{comment}}</p>
+         
+   </div>
+</div>
+   
+ {% endfor %}
+ {% else %}
+  no comment
+ {% endif %}
+{% endblock content %}

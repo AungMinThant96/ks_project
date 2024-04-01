@@ -1,0 +1,12 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Comments{% endblock title %}
+{% block content %}
+ <form action="" method="post">
+    {% csrf_token %}
+    {{form|crispy}}
+    <input type="hidden" name="slug" value={{slug}}>
+    <button type="submit" class="btn btn-primary">Send<i class='fa fa-paper-plane' style='color:#d26914'></i></button>
+    {% comment %} <input type="submit" value="Send"> {% endcomment %}
+ </form>
+{% endblock content %}

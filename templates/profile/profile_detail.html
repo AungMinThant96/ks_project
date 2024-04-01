@@ -1,0 +1,11 @@
+{% extends '_base.html' %}
+{% block title %}Profile Detail{% endblock title %}
+{% block content %}
+    <h1>{{profile}}</h2>
+    <h3>{{profile.user}}</h3>
+   <div>
+        {% for book in profile.user.booklibrary_set.all %}
+            <p><a href="{{ book.get_absolute_url }}">{{book.title}}</a></p>
+        {% endfor %}
+   </div>
+{% endblock content %}

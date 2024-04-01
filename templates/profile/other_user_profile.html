@@ -1,0 +1,51 @@
+{% extends '_base.html' %}
+{% block title %}Profile Detail{% endblock title %}
+{% block content %}
+<h1>{% if profile.avatar %}
+    <div class="avatar avatar--medium active">
+        <img src="{{profile.avatar.url}}" />
+    </div>
+    {% else %}
+    <i class='fa fa-user-circle' style="font-size:50px;"></i>
+    {% endif %}{{profile.username}}</h1>
+<hr>
+<br>
+    <div>
+        {% for book in books %}
+        <div class="card">
+            <div class="card-header">
+                {% if book.user.profile.avatar %}
+                <div class="avatar avatar--small active">
+                    <img src="{{book.user.profile.avatar.url}}" />
+                </div>
+                {% else %}
+                <i class='fa fa-user-circle' style="font-size:40px;"></i>
+                {% endif %}{% if profile %}
+                        <a style="text-decoration:none" href={% url "books:other_profile" profile.pk %}>{{profile.username}}</a>
+                        {% else %}
+                            Unknow User
+                        {% endif %}
+                    </b>
+                        <small><i>{{book.create}}</i></small>
+            </div>
+            <div class="card-body">
+                <a style="text-decoration:none" href={{ book.get_absolute_url }}>{{book}}</a>
+                <hr>
+                <p>{{book.type}}</p>
+                <p>{{book.review|truncatewords:40}}</p>
+                <a class="btn btn-light" style="display:inline;" href={% url "books:comment_s" book.slug %}>
+                    <i class='fa fa-comments' style='color:#d26914'></i>
+                    <span class="badge 
+                        bg-warning">{{book.comments.all|length}}</span>
+               </a>
+            
+               <form action={% url "books:comments" %} method="get" style="display:inline;">
+                    <input type="hidden" name="slug" value={{book.slug}}>
+                    <button type="submit" class="btn btn-light"><i class='fa fa-paper-plane' style='color:#d26914'></i></i></button>
+                </form>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+{% endblock content %}

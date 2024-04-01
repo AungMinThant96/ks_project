@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{% block title %}Bookstore{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/avatar.css' %}">
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'fontawesomefree/js/fontawesome.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/solid.js' %}"></script>
+    <script src="{% static 'fontawesomefree/js/brands.js' %}"></script>
+</head>
+<body style="background-color: #73aac2">
+    <nav class="navbar navbar-expand-sm sticky-top"  style="background-color:#20354f;color:white;"> 
+        <div class="container-fluid">
+            <a href={% url "books:home" %} class="navbar-brand" style="color: white;">KSHARE</a>
+            <ul class="navbar-nav">
+                {% comment %} <li class="nav-item">
+                    <form action={% url "books:search_book" %} method="get">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="q">
+                            <button class="btn btn-secondary"><i class='fa fa-search' style='color:#b5b80f'></i></button>
+                        </div>
+                    </form>
+                </li> {% endcomment %}
+                <li class="nav-item">
+                    <a href={% url "books:book_list" %} class="nav-link"><i class="fa-solid fa-book" style='color:#b5b80f'></i><span style="color:white;"> Books</span></a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href={% url "books:profile" %} class="nav-link"><i class="fa-solid fa-user" style='color:#b5b80f'></i><span style="color:white;"> Profile</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href={% url "account_logout" %} class="nav-link"><span style="color:white;">Logout</span></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href={% url "account_login" %} class="nav-link"><span style="color:white;">Login</span></a>
+                    </li>
+                 {% endif %}
+            </ul>
+        </div>
+    </nav>
+<br>
+<div class="container">
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+   <h1 style="color:#ecdb2a; text-align:center;">KSHARE</h1>
+   <br>
+   <br>
+   <form action={% url "books:search_book" %} method="get">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" name="q" placeholder="Search Book">
+        <button class="btn btn-secondary"><i class='fa fa-search' style='color:#b5b80f'></i></button>
+    </div>
+    </form>
+    <div class="carousel slide" data-bs-ride="carousel" id="slide">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#slide" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#slide" data-bs-slide-to="1"></li>
+            <li data-bs-target="#slide" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="bg-info" style="height: 300px;background:#d4d183">
+                    <div style="height:200px;line-height:200px;text-align:center;">
+                        <span style="display: inline-block; vertical-align: middle; line-height: normal;font-size: 30px;">
+                            <i class='fas fa-book-open'></i><span> <i>You can easily find good books and save time. </i></span><br>
+                            <i class='fas fa-book-open'></i><span ><i> You can guide others to good book you like. </i></span></i>
+                        </span>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="bg-primary" style="height: 300px">
+                    <div style="height:200px;line-height:200px;text-align:center;">
+                        <span style="display: inline-block; vertical-align: middle; line-height: normal;font-size: 30px;">
+                            <i class='fa fa-commenting'></i> 
+                                <i>By commenting on the books, people get to know more and gain
+                                     a lot of knowledge. </i></span>
+                                     <br>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="bg-secondary" style="height: 300px">
+                    <div style="height:200px;line-height:200px;text-align:center;">
+                        <span style="display: inline-block; vertical-align: middle; line-height: normal;font-size: 30px;">
+                            <i class='fas fa-brain'></i><span> <i>You can present your self-written books as an author. </i></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% comment %} <a href="#slide" class="carousel-control-prev" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a href="#slide" class="carousel-control-next" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        </a> {% endcomment %}
+        </div>
+
+{% endblock content %}
+</div>
+<script src={% static "js/bootstrap.bundle.min.js" %}></script>
+</body>
+</html>

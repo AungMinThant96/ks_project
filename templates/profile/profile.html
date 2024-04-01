@@ -1,0 +1,69 @@
+{% extends '_base.html' %}
+{% block title %}Profile{% endblock title %}
+{% block content %}
+<div style="float:right;">
+    <a href={% url "books:book_create" %} class="btn btn-primary"><i class='fa fa-plus'></i> New Add</a>
+    <div style="display:inline" class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" 
+         data-bs-toggle="dropdown"><i class='fa fa-cog'></i> Setting</button>
+        <ul class="dropdown-menu">
+            <li><a href={% url "books:profile_update" profile.pk %} class="dropdown-item"><i class='fas fa-user-edit'></i> Edit Profile</a></li>
+            <li><a href={% url "account_change_password" %} class="dropdown-item"><i class='fa fa-key'></i> Change Password</a></li>
+        </ul>
+    </div>
+</div>
+<h1>
+    {% if profile.avatar %}
+    <div class="avatar avatar--medium active">
+        <img src="{{profile.avatar.url}}" />
+    </div>
+    {% else %}
+    <i class='fa fa-user-circle' style="font-size:50px;"></i>
+    {% endif %}
+    {{profile.username}}
+</h1>
+<hr>
+<br>
+    <div>
+        {% for book in profile.user.book_set.all %}
+        <div class="card">
+            <div class="card-header">
+                {% if book.public_or_private == "Public" %}
+                <span style="float:right"><i class='fa-solid fa-earth-asia' style='color:#3564f3'></i><small> Public</small></span>
+                {% else %}
+                <span style="float:right"><i class='fa fa-user' style='color:#3564f3'></i><small> Private</small></span>
+                {% endif %}
+                {% if book.user.profile.avatar %}
+                <div class="avatar avatar--small active">
+                    <img src="{{book.user.profile.avatar.url}}" />
+                </div>
+                {% else %}
+                <i class='fa fa-user-circle' style="font-size:40px;"></i>
+                {% endif %}{% if profile %}
+                        <a style="text-decoration:none" href={% url "books:other_profile" profile.pk %}>{{profile.username}}</a>
+                        {% else %}
+                            Unknow User
+                        {% endif %}
+                        <small><i>{{book.create}}</i></small>
+            </div>
+            <div class="card-body">
+                <a style="text-decoration:none" href={{ book.get_absolute_url }}>{{book}}</a>
+                <hr>
+                <p>{{book.type}}</p>
+                <p>{{book.review|truncatewords:40}}</p>
+                <a class="btn btn-light" style="display:inline;" href={% url "books:comment_s" book.slug %}>
+                    <i class='fa fa-comments' style='color:#d26914'></i>
+                    <span class="badge 
+                        bg-warning">{{book.comments.all|length}}</span>
+               </a>
+            
+               <form action={% url "books:comments" %} method="get" style="display:inline;">
+                    <input type="hidden" name="slug" value={{book.slug}}>
+                    <button type="submit" class="btn btn-light"><i class='fa fa-paper-plane' style='color:#d26914'></i></i></button>
+                </form>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+{% endblock content %}
